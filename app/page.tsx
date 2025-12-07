@@ -18,7 +18,7 @@ export default function Home() {
 
     // Check backend connection only in development (client-side check)
     if (typeof window !== 'undefined' && window.location.hostname === 'localhost') {
-      const backendUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'
+      const backendUrl = process.env.NEXT_PUBLIC_API_URL || 'https://localhost:5000'
       fetch(`${backendUrl}/health`)
         .then(res => res.text())
         .then(data => console.log('Backend status:', data))
