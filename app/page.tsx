@@ -16,11 +16,16 @@ export default function Home() {
       setIsLoading(false)
     }
 
-    // Check backend connection
-    fetch('http://localhost:3000/')
-      .then(res => res.text())
-      .then(data => console.log(data))
-      .catch(err => console.log('Backend connection check:', err))
+    // Check backend connection only in development (client-side check)
+    if (typeof window !== 'undefined' && window.location.hostname === 'localhost') {
+      const backendUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'
+      fetch(`${backendUrl}/health`)
+        .then(res => res.text())
+        .then(data => console.log('Backend status:', data))
+        .catch(() => {
+          // Silently fail - backend might not be running
+        })
+    }
   }, [])
 
   if (isLoading) {
